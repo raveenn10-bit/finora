@@ -1,0 +1,40 @@
+name: finora
+description: Finora V1 – premium biometric personal finance app.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Auth
+  local_auth: ^2.3.0
+
+  # Secure storage for PIN hash & session token
+  flutter_secure_storage: ^9.2.2
+
+  # State management
+  flutter_riverpod: ^2.5.1
+
+  # Google Fonts (Plus Jakarta Sans — clean fintech type)
+  google_fonts: ^6.2.1
+
+  # SVG icons
+  flutter_svg: ^2.0.10+1
+
+  # Smooth page transitions
+  go_router: ^14.2.7
+
+  # SHA-256 PIN hashing (used by pin_service.dart)
+  crypto: ^3.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
