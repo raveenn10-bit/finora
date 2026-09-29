@@ -56,11 +56,11 @@ jobs:
             echo "Configuring release signing from GitHub Secrets..."
             echo "$KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
             cat <<EOF > android/key.properties
-          storePassword=$KEYSTORE_PASSWORD
-          keyPassword=$KEY_PASSWORD
-          keyAlias=$KEY_ALIAS
-          storeFile=app/upload-keystore.jks
-          EOF
+storePassword=$KEYSTORE_PASSWORD
+keyPassword=$KEY_PASSWORD
+keyAlias=$KEY_ALIAS
+storeFile=upload-keystore.jks
+EOF
             echo "Release keystore configured successfully."
           else
             echo "No signing secrets provided. Building with fallback signing configuration."
