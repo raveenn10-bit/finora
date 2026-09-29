@@ -3,14 +3,21 @@
 //  Large balance display card with gradient glow.
 // ─────────────────────────────────────────────────────────
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/providers/balance_provider.dart';
 import '../../../core/theme/colors.dart';
 
-class BalanceHero extends StatelessWidget {
+class BalanceHero extends ConsumerWidget {
   const BalanceHero({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final balance = ref.watch(balanceProvider);
+    final total = balance['total'] ?? 0.0;
+    final income = balance['income'] ?? 0.0;
+    final expenses = balance['expenses'] ?? 0.0;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(28),
@@ -59,7 +66,7 @@ class BalanceHero extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                '0.00',
+                total.toStringAsFixed(2),
                 style: GoogleFonts.plusJakartaSans(
                   color: kText,
                   fontSize: 44,
@@ -70,19 +77,21 @@ class BalanceHero extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          const Row(
+          Row(
             children: [
               _Stat(
-                  label: 'Income',
-                  value: '₹0',
-                  icon: Icons.arrow_downward_rounded,
-                  iconColor: kMint),
-              SizedBox(width: 24),
+                label: 'Income',
+                value: '₹${income.toStringAsFixed(2)}',
+                icon: Icons.arrow_downward_rounded,
+                iconColor: kMint,
+              ),
+              const SizedBox(width: 24),
               _Stat(
-                  label: 'Expenses',
-                  value: '₹0',
-                  icon: Icons.arrow_upward_rounded,
-                  iconColor: kError),
+                label: 'Expenses',
+                value: '₹${expenses.toStringAsFixed(2)}',
+                icon: Icons.arrow_upward_rounded,
+                iconColor: kError,
+              ),
             ],
           ),
         ],

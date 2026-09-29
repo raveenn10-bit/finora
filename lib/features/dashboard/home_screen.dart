@@ -9,8 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../core/security/session_provider.dart';
 import '../../core/theme/colors.dart';
 import '../../core/widgets/brand_logo.dart';
-import '../../core/widgets/glass_card.dart';
 import '../auth/lock_screen.dart';
+import '../transactions/transaction_history_screen.dart';
+import '../transactions/widgets/recent_transactions_list.dart';
 import 'widgets/balance_hero.dart';
 import 'widgets/quick_action_row.dart';
 
@@ -99,32 +100,50 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
 
-            // ── Feature Cards ─────────────────────────────
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-              sliver: SliverList.separated(
-                itemCount: _features.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 14),
-                itemBuilder: (_, i) => GlassCard(
-                  title: _features[i].title,
-                  text: _features[i].description,
-                  trailing: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: kMint.withOpacity(0.12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      'Soon',
+            // ── Recent Transactions ───────────────────────
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 28, 24, 0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Recent Transactions',
                       style: GoogleFonts.plusJakartaSans(
-                        color: kMint,
-                        fontSize: 11,
+                        color: kText,
+                        fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                  ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const TransactionHistoryScreen(),
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        foregroundColor: kMint,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                      ),
+                      child: Text(
+                        'See All',
+                        style: GoogleFonts.plusJakartaSans(
+                          color: kMint,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(24, 12, 24, 0),
+                child: RecentTransactionsList(),
               ),
             ),
 
@@ -149,17 +168,3 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 }
-
-class _Feature {
-  final String title, description;
-  const _Feature(this.title, this.description);
-}
-
-const _features = [
-  _Feature('TRACK',
-      'Log daily income and expenses with instant categorisation. Build a clear picture of your financial habits.'),
-  _Feature('SAVE',
-      'Set savings goals and watch your progress with real-time charts and milestone celebrations.'),
-  _Feature('GROW',
-      'Smart insights powered by your data. See where your money can work harder for you.'),
-];

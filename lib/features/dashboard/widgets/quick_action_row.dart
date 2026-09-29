@@ -6,23 +6,50 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/colors.dart';
+import '../../transactions/add_transaction_sheet.dart';
 
 class QuickActionRow extends StatelessWidget {
   const QuickActionRow({super.key});
 
-  static const _actions = [
-    _QuickAction(icon: Icons.add_rounded, label: 'Add', comingSoon: false),
-    _QuickAction(
-        icon: Icons.bar_chart_rounded, label: 'Track', comingSoon: true),
-    _QuickAction(icon: Icons.savings_outlined, label: 'Save', comingSoon: true),
-    _QuickAction(
-        icon: Icons.trending_up_rounded, label: 'Grow', comingSoon: true),
-    _QuickAction(
-        icon: Icons.history_rounded, label: 'History', comingSoon: true),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final actions = [
+      _QuickAction(
+        icon: Icons.add_rounded,
+        label: 'Expense',
+        comingSoon: false,
+        onTap: () => showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (_) => const AddTransactionSheet(),
+        ),
+      ),
+      _QuickAction(
+        icon: Icons.arrow_downward_rounded,
+        label: 'Income',
+        comingSoon: false,
+        onTap: () => showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (_) => const AddTransactionSheet(initialType: 'income'),
+        ),
+      ),
+      const _QuickAction(
+        icon: Icons.swap_horiz_rounded,
+        label: 'Transfer',
+        comingSoon: true,
+        onTap: null,
+      ),
+      const _QuickAction(
+        icon: Icons.pie_chart_outline_rounded,
+        label: 'Budget',
+        comingSoon: true,
+        onTap: null,
+      ),
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,7 +66,7 @@ class QuickActionRow extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: _actions.map((a) => _ActionChip(action: a)).toList(),
+            children: actions.map((a) => _ActionChip(action: a)).toList(),
           ),
         ),
       ],
@@ -51,10 +78,13 @@ class _QuickAction {
   final IconData icon;
   final String label;
   final bool comingSoon;
+  final VoidCallback? onTap;
+
   const _QuickAction({
     required this.icon,
     required this.label,
     required this.comingSoon,
+    required this.onTap,
   });
 }
 
@@ -67,7 +97,7 @@ class _ActionChip extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: GestureDetector(
-        onTap: action.comingSoon ? null : () {},
+        onTap: action.comingSoon ? null : action.onTap,
         child: Opacity(
           opacity: action.comingSoon ? 0.55 : 1.0,
           child: Column(
