@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finora — Track. Save. Grow. | Premium Personal Finance</title>
+  <meta name="description" content="Finora is a simple, secure and beautifully designed personal finance app with biometric protection for Android." />
+  <link rel="icon" type="image/png" href="assets/branding/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #06111C;
+      --surface: #0D1E2D;
+      --surface-glass: rgba(13, 30, 45, 0.7);
+      --border: rgba(24, 230, 161, 0.16);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --mint: #18E6A1;
+      --mint-glow: rgba(24, 230, 161, 0.35);
+      --cyan: #00BFC7;
+      --cyan-glow: rgba(0, 191, 199, 0.25);
+      --text: #EAF3FF;
+      --muted: #8E9EA7;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 191, 199, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 25%, rgba(24, 230, 161, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(24, 230, 161, 0.08) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* ── Header / Navbar ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(6, 17, 28, 0.75);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 12px var(--mint-glow));
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover .brand-logo {
+      transform: scale(1.08) rotate(5deg);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, #FFFFFF, var(--mint));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--mint);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--mint);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px var(--mint-glow);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(24, 230, 161, 0.6);
+      background: #22f3ad;
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      max-width: 1200px;
+      margin: 40px auto 80px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(24, 230, 161, 0.08);
+      border: 1px solid var(--border);
+      color: var(--mint);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 8px var(--mint);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    .hero-title {
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1.2px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--mint), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 440px;
+    }
+
+    .download-btn-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: var(--mint);
+      color: var(--bg);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 18px 36px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 8px 35px var(--mint-glow);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: none;
+      cursor: pointer;
+    }
+
+    .download-btn-main:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 45px rgba(24, 230, 161, 0.65);
+      background: #25fbb3;
+    }
+
+    .download-btn-main svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .download-subtext {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .download-subtext span {
+      color: var(--mint);
+    }
+
+    .secondary-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .secondary-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    .secondary-links a:hover {
+      opacity: 1;
+      color: var(--mint);
+    }
+
+    .hero-mockup-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-mockup-img {
+      width: 100%;
+      max-width: 540px;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(24, 230, 161, 0.15);
+      border: 1px solid var(--border);
+      transition: transform 0.5s ease;
+    }
+
+    .hero-mockup-img:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    /* ── Features Grid ── */
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto 48px;
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--mint), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon-wrapper {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(24, 230, 161, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--mint);
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── App Preview Section ── */
+    .app-preview-section {
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 0 24px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .preview-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 24px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .preview-card:hover {
+      border-color: var(--border);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .preview-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .preview-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .preview-phone-img {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s;
+    }
+
+    .preview-card:hover .preview-phone-img {
+      transform: scale(1.03);
+    }
+
+    /* ── Installation Guide Section ── */
+    .install-section {
+      max-width: 860px;
+      margin: 80px auto;
+      padding: 48px 32px;
+      background: linear-gradient(180deg, var(--surface) 0%, rgba(13, 30, 45, 0.4) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .install-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 36px 0;
+      text-align: left;
+    }
+
+    .step-box {
+      background: rgba(6, 17, 28, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--mint);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .step-box h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step-box p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(6, 17, 28, 0.95);
+      padding: 48px 24px 32px;
+      margin-top: 80px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--mint);
+    }
+
+    .footer-bottom {
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .hero-title {
+        font-size: 40px;
+      }
+      .hero-desc {
+        margin: 0 auto 32px;
+      }
+      .hero-actions {
+        margin: 0 auto;
+      }
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <img src="assets/branding/logo.png" alt="Finora" class="brand-logo" />
+        <span class="brand-title">FINORA</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#preview">Screenshots</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+
+      <a href="https://github.com/raveenn10-bit/finora/releases/latest" id="navDownloadBtn" class="nav-cta">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993s-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993s-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.099 12 8.099c-1.8533 0-3.5902.3126-5.1378.8507L4.8399 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.152 5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/></svg>
+        Download APK
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Hero Section ── -->
+  <main class="hero">
+    <div class="hero-content">
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        v1.0.0 Stable • Android Release
+      </div>
+
+      <h1 class="hero-title">
+        Simple. Secure.
+        <span>Your Finances.</span>
+      </h1>
+
+      <p class="hero-desc">
+        Finora is a simple, secure, and beautifully designed personal finance app built with Flutter and protected by your device’s native biometrics.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://github.com/raveenn10-bit/finora/releases/latest" id="heroDownloadBtn" class="download-btn-main">
+          <svg viewBox="0 0 24 24"><path d="M12 16l4-4h-3V4h-2v8H8l4 4zm9 4H3v-2h18v2z"/></svg>
+          DOWNLOAD APK (ANDROID)
+        </a>
+
+        <div class="download-subtext">
+          <span>✓</span> Latest APK • Free & Open Source
+        </div>
+
+        <div class="secondary-links">
+          <a href="https://github.com/raveenn10-bit/finora/releases" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            View All Releases
+          </a>
+          <span style="opacity: 0.3">•</span>
+          <a href="#how-to-install">How to Install?</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-mockup-wrapper">
+      <img src="assets/branding/hero_showcase.png" alt="Finora App Showcase" class="hero-mockup-img" />
+    </div>
+  </main>
+
+  <!-- ── Features Section ── -->
+  <section class="features" id="features">
+    <h2 class="section-title">A Smarter Way to Manage Your Money</h2>
+    <p class="section-desc">Finora provides an intuitive interface focused on security, speed, and privacy.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Biometric Security</h3>
+        <p>Unlock Finora seamlessly using your phone's native Fingerprint or Face ID hardware enclave.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Quick PIN Fallback</h3>
+        <p>Never get locked out. A safe 6-digit cryptographic PIN fallback is always ready whenever needed.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Auto-Lock Protection</h3>
+        <p>Finora automatically locks after 60 seconds of background inactivity to prevent unauthorized access.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrapper">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Dark Glass UI</h3>
+        <p>Crafted with a premium cyberpunk aesthetic featuring emerald and cyan neon accents for nighttime clarity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── App Preview Section ── -->
+  <section class="app-preview-section" id="preview">
+    <h2 class="section-title">📱 App Preview</h2>
+    <p class="section-desc">Experience the clean, modern look of Finora right on your phone.</p>
+
+    <div class="preview-grid">
+      <div class="preview-card">
+        <h3>Splash Screen</h3>
+        <p>Minimal neon branding entrance</p>
+        <img src="assets/screenshots/splash.png" alt="Splash Screen" class="preview-phone-img" />
+      </div>
+
+      <div class="preview-card">
+        <h3>Biometric Lock</h3>
+        <p>Instant fingerprint / Face ID auth</p>
+        <img src="assets/screenshots/lock.png" alt="Biometric Lock Screen" class="preview-phone-img" />
+      </div>
+
+      <div class="preview-card">
+        <h3>Home Dashboard</h3>
+        <p>Clean balance & action cards</p>
+        <img src="assets/screenshots/home.png" alt="Home Dashboard" class="preview-phone-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Installation Guide Section ── -->
+  <section class="install-section" id="how-to-install">
+    <h2 style="font-size: 28px; margin-bottom: 8px;">📥 How to Install on Android</h2>
+    <p style="color: var(--muted); font-size: 15px;">Follow these simple steps to install the APK directly:</p>
+
+    <div class="install-steps">
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <h4>Download APK</h4>
+        <p>Tap the download button below to download the latest <code>Finora-v1.0.0.apk</code>.</p>
+      </div>
+
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <h4>Allow Permission</h4>
+        <p>Android may ask: <em>"Install unknown apps"</em>. Tap Settings and turn on <b>"Allow from this source"</b>.</p>
+      </div>
+
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <h4>Install & Launch</h4>
+        <p>Tap <b>Install</b>, open Finora, verify with fingerprint or PIN, and you are ready!</p>
+      </div>
+    </div>
+
+    <a href="https://github.com/raveenn10-bit/finora/releases/latest" id="directDownloadBtn" class="download-btn-main" style="display: inline-flex; margin: 0 auto;">
+      <svg viewBox="0 0 24 24"><path d="M12 16l4-4h-3V4h-2v8H8l4 4zm9 4H3v-2h18v2z"/></svg>
+      DOWNLOAD FINORA APK
+    </a>
+  </section>
+
+  <!-- ── Security Disclosure ── -->
+  <section style="max-width: 800px; margin: 60px auto; padding: 0 24px; text-align: center;" id="security">
+    <h3 style="color: var(--mint); font-size: 20px; margin-bottom: 12px;">🔒 Biometric Privacy Guarantee</h3>
+    <p style="color: var(--muted); font-size: 14px; line-height: 1.8;">
+      Finora uses your device's native platform biometrics. Your fingerprint and facial data never leave your phone's hardware security module (Secure Enclave / Android KeyStore). Finora does not store, transmit, or have direct access to your biometric raw data.
+    </p>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-container">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="assets/branding/logo.png" alt="Finora Logo" style="width: 32px; height: 32px;" />
+        <span style="font-weight: 800; letter-spacing: 2px;">FINORA</span>
+      </div>
+
+      <p style="color: var(--muted); font-size: 14px;">Track. Save. Grow. • Premium Mobile Finance</p>
+
+      <ul class="footer-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#preview">Preview</a></li>
+        <li><a href="https://github.com/raveenn10-bit/finora/releases">GitHub Releases</a></li>
+        <li><a href="https://github.com/raveenn10-bit/finora">Source Code</a></li>
+      </ul>
+
+      <div class="footer-bottom">
+        <div>© 2026 Finora App. Open Source Personal Finance.</div>
+        <div>Version v1.0.0 • Powered by Flutter</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Smart GitHub Release Auto-Detector ── -->
+  <script>
+    // Automatically queries GitHub Releases for the latest direct APK download link
+    const REPO = 'raveenn10-bit/finora';
+    const fallbackUrl = `https://github.com/${REPO}/releases/latest`;
+
+    async function initDownloadLinks() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
+        if (!res.ok) return; // Keep fallback
+        const data = await res.json();
+        
+        // Find .apk asset
+        const apkAsset = data.assets && data.assets.find(a => a.name.endsWith('.apk'));
+        if (apkAsset && apkAsset.browser_download_url) {
+          const apkUrl = apkAsset.browser_download_url;
+          document.getElementById('navDownloadBtn').href = apkUrl;
+          document.getElementById('heroDownloadBtn').href = apkUrl;
+          document.getElementById('directDownloadBtn').href = apkUrl;
+          console.log('Direct APK link active:', apkUrl);
+        }
+      } catch (e) {
+        console.log('Using default release destination');
+      }
+    }
+    initDownloadLinks();
+  </script>
+</body>
+</html>
