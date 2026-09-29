@@ -10,6 +10,8 @@ import '../../core/security/session_provider.dart';
 import '../../core/theme/colors.dart';
 import '../../core/widgets/brand_logo.dart';
 import '../auth/lock_screen.dart';
+import '../settings/settings_screen.dart';
+import '../transactions/add_transaction_sheet.dart';
 import '../transactions/transaction_history_screen.dart';
 import '../transactions/widgets/recent_transactions_list.dart';
 import 'widgets/balance_hero.dart';
@@ -32,6 +34,18 @@ class HomeScreen extends ConsumerWidget {
     });
 
     return Scaffold(
+      backgroundColor: kNavy,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kMint,
+        foregroundColor: kNavy,
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (_) => const AddTransactionSheet(),
+        ),
+        child: const Icon(Icons.add_rounded, size: 28),
+      ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -43,6 +57,16 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     const BrandLogo(size: 36),
                     const Spacer(),
+                    IconButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const SettingsScreen()),
+                      ),
+                      icon: const Icon(Icons.settings_outlined,
+                          color: kMuted, size: 22),
+                      tooltip: 'Settings',
+                    ),
                     IconButton(
                       onPressed: () =>
                           ref.read(sessionProvider.notifier).lock(),
@@ -153,7 +177,7 @@ class HomeScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 28),
                 child: Center(
                   child: Text(
-                    'Finora V1.0 • Private Beta',
+                    'Finora V2.0',
                     style: GoogleFonts.plusJakartaSans(
                       color: kMuted,
                       fontSize: 12,

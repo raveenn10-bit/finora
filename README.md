@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/raveenn10-bit/finora/releases"><img src="https://img.shields.io/badge/version-v1.0.0-18E6A1?style=for-the-badge&logo=github&logoColor=06111C" alt="Version v1.0.0" /></a>
+  <a href="https://github.com/raveenn10-bit/finora/releases"><img src="https://img.shields.io/badge/version-v2.0.0-18E6A1?style=for-the-badge&logo=github&logoColor=06111C" alt="Version v2.0.0" /></a>
   <a href="https://github.com/raveenn10-bit/finora/releases/latest"><img src="https://img.shields.io/badge/platform-Android-00BFC7?style=for-the-badge&logo=android&logoColor=white" alt="Platform Android" /></a>
   <a href="https://flutter.dev"><img src="https://img.shields.io/badge/built%20with-Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Built with Flutter" /></a>
 </p>
@@ -72,9 +72,12 @@
 ## ✨ Features
 
 - 🔐 **Biometric Security** — Face ID, Touch ID, and Fingerprint authentication where supported by hardware.
-- ⚡ **Quick Unlock** — Instantly and securely access Finora using your device's native credential framework.
-- 💎 **Premium UI** — High-contrast dark glassmorphism interface styled with emerald and cyan neon accents.
-- 📱 **Android Support** — Installable, standalone Android application package with smooth 60fps animations.
+- ⚡ **Quick Unlock & PIN Fallback** — Instant biometric access with a 6-digit PIN fallback and 60-second auto-lock.
+- 💰 **Income & Expense Tracking** — Fast transaction logging with custom numeric keypad, category tagging, and date picker.
+- 📊 **Real-Time Live Balance** — Auto-computed Total Balance, Total Income, and Total Expenses updated instantaneously.
+- 🗄️ **Local SQLite Database** — 100% offline, zero-cloud data storage with full privacy and persistent local cache.
+- 🗑️ **Swipe to Delete & History** — Effortlessly delete transactions with a swipe gesture and view the full transaction history.
+- 💎 **Premium Dark Glass UI** — Cyberpunk dark glassmorphism interface styled with emerald and cyan neon accents.
 
 ---
 
@@ -91,34 +94,36 @@ Ready to experience Finora? Grab the latest Android release package directly fro
 ### Step-by-Step Installation:
 
 1. Tap **[DOWNLOAD APK](https://github.com/raveenn10-bit/finora/releases/latest)** to open the latest release page.
-2. In the **Assets** section at the bottom of the release, download the `Finora-v<VERSION>.apk` file (e.g., `Finora-v1.0.0.apk`).
+2. In the **Assets** section at the bottom of the release, download the `Finora-v<VERSION>.apk` file (e.g., `Finora-v2.0.0.apk`).
 3. Once the download finishes, open the downloaded APK on your Android device.
 4. When prompted, permit your browser or file manager to **"Install apps from this source"**.
 5. Tap **Install** and launch **Finora**.
 
 ---
 
-## 🔒 Biometric Security
+## 🔒 Biometric Security & Privacy
 
-Finora uses the device's native biometric authentication system via standard platform APIs. 
+Finora is designed privacy-first:
 
-- **Privacy-First**: Finora never collects, accesses, or transmits your fingerprint, Face ID, or other biometric data.
-- **Hardware-Isolated**: All biometric verification occurs strictly within your device's secure hardware enclave (TEE/Secure Enclave).
+- **100% Local**: All financial records and categories are stored locally in your phone's SQLite database. No analytics, tracking, or cloud uploads.
+- **Hardware-Isolated Auth**: Fingerprint and Face ID authentication run entirely through native Android BiometricPrompt security enclaves.
 
 ---
 
 ## 🛠 Built With
 
-- **[Flutter](https://flutter.dev/)** — Multi-platform UI toolkit
-- **[Dart](https://dart.dev/)** — Client-optimized programming language
-- **[Android](https://developer.android.com/)** — Native Android embedding (`FlutterFragmentActivity`)
+- **[Flutter](https://flutter.dev/)** (3.24.5) — Multi-platform UI framework
+- **[Dart](https://dart.dev/)** — Modern client-optimized language
+- **[Riverpod](https://riverpod.dev/)** — Reactive state management
+- **[SQLite / sqflite](https://pub.dev/packages/sqflite)** — Fast, lightweight local database
 - **[local_auth](https://pub.dev/packages/local_auth)** — Biometric authentication plugin
+- **[flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)** — Encrypted PIN storage
 
 ---
 
 ## 📦 Release Information
 
-- **Current Version**: `v1.0.0`
+- **Current Version**: `v2.0.0`
 - **Repository**: [`raveenn10-bit/finora`](https://github.com/raveenn10-bit/finora)
 - **Releases**: [View all releases on GitHub](https://github.com/raveenn10-bit/finora/releases)
 
